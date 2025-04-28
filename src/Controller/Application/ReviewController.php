@@ -17,9 +17,8 @@ class ReviewController extends AbstractController
     public function __construct(
         private readonly ReviewService $reviewService,
         private readonly EntityManagerInterface $em,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
-
     }
 
     #[Route('/search', name: 'review_search', methods: ['GET'])]
@@ -59,6 +58,7 @@ class ReviewController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', $this->translator->trans('review.thanks'));
+
             return $this->redirectToRoute('review_index');
         }
 

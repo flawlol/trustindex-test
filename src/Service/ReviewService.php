@@ -9,9 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 final readonly class ReviewService
 {
     public function __construct(
-        private  ReviewRepository $reviewRepository
+        private ReviewRepository $reviewRepository,
     ) {
-
     }
 
     public function search(Request $request): SearchDto

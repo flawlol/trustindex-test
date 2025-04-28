@@ -45,6 +45,7 @@ class Review
     public function setCompanyName(string $companyName): self
     {
         $this->companyName = $companyName;
+
         return $this;
     }
 
@@ -56,6 +57,7 @@ class Review
     public function setRating(int $rating): self
     {
         $this->rating = $rating;
+
         return $this;
     }
 
@@ -67,6 +69,7 @@ class Review
     public function setReviewText(string $reviewText): self
     {
         $this->reviewText = $reviewText;
+
         return $this;
     }
 
@@ -78,6 +81,7 @@ class Review
     public function setAuthorEmail(string $authorEmail): self
     {
         $this->authorEmail = $authorEmail;
+
         return $this;
     }
 

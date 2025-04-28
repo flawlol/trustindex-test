@@ -17,7 +17,7 @@ class ReviewRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->where('r.companyName LIKE :searchTerm')
-            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->setParameter('searchTerm', '%'.$searchTerm.'%')
             ->getQuery()
             ->getResult();
     }
