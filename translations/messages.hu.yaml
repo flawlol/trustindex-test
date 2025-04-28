@@ -1,0 +1,13 @@
+review:
+  thanks: "Köszönjük a visszajelzésedet!"
+  new: "Új értékelés"
+  submit: 'Küldés'
+  reviews: "Értékelések"
+  details: "Részletek"
+  search: "Értékelések keresése"
+  back: "Vissza az értékelésekhez"
+  no_reviews: "Nincs értékelés"
+  results: "Eredmények"
+  search_by_company: "Keresés cég neve alapján"
+  star: "Csillag"
+  name_of_company: "A cég neve"

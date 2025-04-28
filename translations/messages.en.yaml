@@ -1,0 +1,13 @@
+review:
+  thanks: "Thank you for your feedback!"
+  new: "New review"
+  submit: "Submit"
+  reviews: "Reviews"
+  details: "Details"
+  search: "Search reviews"
+  back: "Back to reviews"
+  no_reviews: "No reviews found"
+  results: "Results"
+  search_by_company: "Search by company name"
+  star: "Star"
+  name_of_company: "Name of the company"

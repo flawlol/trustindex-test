@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+   {% block body %}
+       <h1>{{ review.companyName }}</h1>
+       <p>{{ review.rating }} {{ 'review.star'|trans }}</p>
+       <p>{{ review.reviewText }}</p>
+       <p>{{ review.createdAt|date('Y-m-d H:i') }}</p>
+       <a href="{{ path('review_index') }}">{{ 'review.back'|trans }}</a>
+   {% endblock %}

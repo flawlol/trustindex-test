@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ 'review.reviews'|trans }}</h1>
+
+    <div class="mb-3">
+        <a href="{{ path('review_new') }}" class="btn btn-primary"> {{ 'review.new'|trans }}</a>
+        <form method="get" action="{{ path('review_search') }}" class="d-inline">
+            <input type="text" name="q" placeholder="{{ 'review.name_of_company'|trans }}" required class="form-control d-inline" style="width: auto; display: inline-block;">
+            <button type="submit" class="btn btn-secondary">{{ 'review.search'|trans }}</button>
+        </form>
+    </div>
+
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>{{ review.companyName }}</strong>
+                <div>
+                    {% for i in 1..5 %}
+                        {% if i <= review.rating %}
+                            <i class="fas fa-star" style="color: gold;"></i>
+                        {% else %}
+                            <i class="far fa-star" style="color: gold;"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <p>{{ review.reviewText }}</p>
+                <a href="{{ path('review_show', {id: review.id}) }}">{{ 'review.details'|trans}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

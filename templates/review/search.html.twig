@@ -1,0 +1,38 @@
+{# templates/review/search.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ 'review.search_by_company'|trans }}</h1>
+
+    <form method="get" action="{{ path('review_search') }}" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="q" value="{{ searchTerm }}" placeholder="Cég neve" required class="form-control">
+            <button type="submit" class="btn btn-primary"> {{ 'review.search'|trans }}</button>
+        </div>
+    </form>
+
+    <a href="{{ path('review_index') }}" class="btn btn-secondary">{{ 'review.back'|trans }} </a>
+
+    <h2>{{ 'review.results'|trans }}</h2>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>{{ review.companyName }}</strong>
+                <div>
+                    {% for i in 1..5 %}
+                        {% if i <= review.rating %}
+                            <i class="fas fa-star" style="color: gold;"></i>
+                        {% else %}
+                            <i class="far fa-star" style="color: gold;"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <p>{{ review.reviewText }}</p>
+                <small>{{ review.createdAt|date('Y-m-d H:i') }}</small>
+            </li>
+        {% else %}
+            <li>{{ 'review.no_reviews'|trans }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

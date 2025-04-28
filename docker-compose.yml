@@ -1,0 +1,105 @@
+version: '3.5'
+
+services:
+  database:
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-AdAtBaZiSJeLSzO1}
+      POSTGRES_USER: ${POSTGRES_USER:-trustindex}
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:${REDIS_VERSION:-7}-alpine
+    networks:
+      - default
+    volumes:
+      - redis_data:/data
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+
+  app:
+    container_name: ${DOCKER_ENV}_${DOCKER_NAME}_app
+    build:
+      context: ./
+      dockerfile: ./docker/app/Dockerfile
+    restart: always
+    environment:
+      CONTAINER_ROLE: app
+    volumes:
+      - ./docker/app/entrypoint.sh:/scripts/entrypoint.sh
+      - ./:/var/www
+    depends_on:
+      - database
+    networks:
+      - default
+
+  # Nginx Service
+  nginx:
+    container_name: ${DOCKER_ENV}_${DOCKER_NAME}_nginx
+    image: topinhub/nginx
+    restart: always
+    networks:
+      - default
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:443:443"
+
+  consumer:
+    container_name: ${DOCKER_ENV}_${DOCKER_NAME}_consumer
+    build:
+      context: ./
+      dockerfile: ./docker/app/Dockerfile
+    restart: always
+    environment:
+      CONTAINER_ROLE: consumer
+    volumes:
+      - ./docker/app/entrypoint.sh:/scripts/entrypoint.sh
+      - ./:/var/www
+    depends_on:
+      - database
+    networks:
+      - default
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ${DOCKER_ENV}_${DOCKER_NAME}_mailhog
+    restart: always
+    ports:
+      - "1025:1025"
+      - "8100:8025"
+    networks:
+      - default
+
+  # pgAdmin
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@asd.asd'
+      PGADMIN_DEFAULT_PASSWORD: 'admin'
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - database
+
+
+volumes:
+  ###> doctrine/doctrine-bundle ###
+  database_data:
+  ###< doctrine/doctrine-bundle ###
+  ###> symfony/cache ###
+  redis_data:
+  ###< symfony/cache ###
+  pgadmin_data:
