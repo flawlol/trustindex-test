@@ -45,5 +45,10 @@ Open your web browser and go to http://127.0.0.1/ to access the application.
     docker-compose logs -f
    ```
 
+## **Endpoints:**
+  - Base URL: http://127.0.0.1/
+  - Create new review: http://127.0.0.1/review/new
+  - Show review by ID: http://127.0.0.1/review/{id}
+ 
 ## License
 This project is licensed under the MIT License.
